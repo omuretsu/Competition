@@ -49,25 +49,14 @@ struct P {
 		return add(x * p.y, -y * p.x);
 	}
 };
-bool intersect(P s1, P e1, P s2, P e2) { // 線分交差
-	//x座標的に離れて位置している
-	if (max(s1.x, e1.x) < min(s2.x, e2.x) || max(s2.x, e2.x) < min(s1.x, e1.x)) return false;
-	//y座標的に離れて位置している
-	if (max(s1.y, e1.y) < min(s2.y, e2.y) || max(s2.y, e2.y) < min(s1.y, e1.y)) return false;
-	//交差している
-	double res1 = (e1 - s1).cross(s2 - s1) * (e1 - s1).cross(e2 - s1);
-	double res2 = (e2 - s2).cross(e1 - s2) * (e2 - s2).cross(s1 - s2);
-	return (res1 < EPS) && (res2 < EPS);
-}
-bool on_seg(P p1, P p2, P q) { // 線分p1-p2上にある点qがあるか判定
-	return (p1 - q).cross(p2 - q) == 0 && (p1 - q).dot(p2 - q) <= 0;
-}
-
 
 int N;
-// グラハムスキャンによる凸包
 P ps[50005];
 
+// 概要　：グラハムスキャンで多角形の外周頂点を求める
+// 引数１：頂点の配列
+// 引数２：頂点の配列のサイズ
+// 戻り値：外周の頂点リスト
 bool cmp_x(const P &s, const P &t) {
 	if (s.x != t.x) return s.x < t.x;
 	return s.y < t.y;
@@ -96,9 +85,6 @@ int main() {
 	scanf("%d", &N);
 	int x, y;
 	rep(i, N) {
-		//scanf("%d %d", &x, &y);
-		//ps[i].x = x;
-		//ps[i].y = y;
 		scanf("%lf %lf", &ps[i].x, &ps[i].y);
 	}
 	vector<P> qs = convex_hull(ps, N);

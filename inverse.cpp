@@ -47,7 +47,6 @@ ll getmod(ll x) {
 }
 
 int main() {
-	
 	return 0;
 }
 

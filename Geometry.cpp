@@ -29,8 +29,7 @@ struct P {
 	double x, y;
 	P() : x(0), y(0) {}
 	P(double x, double y) : x(x), y(y) {};
-	// 誤差を考慮して加算
-	double add(double a, double b) {
+	double add(double a, double b) { // 誤差を考慮して加算
 		if (abs(a + b) < EPS * (abs(a) + abs(b))) return 0;
 		return a + b;
 	}
@@ -50,6 +49,13 @@ struct P {
 		return add(x * p.y, -y * p.x);
 	}
 };
+// 概要　：線分s1-e1と線分s2-e2が交差しているか判定する(線分はベクトル扱い)
+// 引数１：ベクトル1の始点
+// 引数２：ベクトル1の終点
+// 引数３：ベクトル2の始点
+// 引数４：ベクトル2の終点
+// 戻り値：true  ベクトル1とベクトル2は交差している
+// 　　　　false ベクトル1とベクトル2は交差していない
 bool intersect(P s1, P e1, P s2, P e2) { // 線分交差
 	//x座標的に離れて位置している
 	if (max(s1.x, e1.x) < min(s2.x, e2.x) || max(s2.x, e2.x) < min(s1.x, e1.x)) return false;
@@ -60,6 +66,12 @@ bool intersect(P s1, P e1, P s2, P e2) { // 線分交差
 	double res2 = (e2 - s2).cross(e1 - s2) * (e2 - s2).cross(s1 - s2);
 	return (res1 < EPS) && (res2 < EPS);
 }
+// 概要　：線分上にp1-p2上に点qが存在するか判定する
+// 引数１：線分の端点１(p1)
+// 引数２：線分の端点２(p2)
+// 引数３：判定対象の点(q)
+// 戻り値：true  線分上に点qが存在する
+// 　　　　false 線分上に点qが存在しない
 bool on_seg(P p1, P p2, P q) { // 線分p1-p2上にある点qがあるか判定
 	return (p1 - q).cross(p2 - q) == 0 && (p1 - q).dot(p2 - q) <= 0;
 }
