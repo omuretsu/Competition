@@ -23,7 +23,10 @@ typedef pair<long, long> PLL;
 
 typedef vector< vector<int> > Mat;
 
-//A * Bの行列積を計算
+// 概要  : A * Bの行列積を計算
+// 引数1 : 行列A
+// 引数2 : 行列B
+// 返り値: 行列A*行列Bの結果
 Mat mul(Mat &A, Mat &B) {
 	Mat C(A.size(), vector<int>(B[0].size()));
 	rep(i, A.size()) {
@@ -36,7 +39,10 @@ Mat mul(Mat &A, Mat &B) {
 	return C;
 }
 
-//A^xの行列積を計算する(行数=列数であること)
+// 概要		:	A^xの行列積を計算する(行数=列数であること)
+// 引数1	: 行列A
+// 引数2	: 指数部x
+// 返り値	: A^xの結果
 Mat pow(Mat A, int x) {
 	Mat B(A.size(), vector<int>(A.size()));
 	rep(i, A.size()) B[i][i] = 1; //単位行列
