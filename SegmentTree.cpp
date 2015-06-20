@@ -22,32 +22,31 @@ typedef pair<int, int> PII;
 typedef pair<long, long> PLL;
 
 //SegmentTree RMQ version
-class SegmentTree {
-	public:
-		int n_;
-		int dat_[100005]; //2 * n - 1ˆÈã‚Ì‘å‚«‚³‚ğŠm•Û‚·‚é‚±‚Æ
-		void init(int n) {
-			n_ = 1;
-			while (n_ < n) {
-				n_ *= 2;
+struct SegmentTree {
+		int n;
+		int dat[100005]; //2 * n - 1ˆÈã‚Ì‘å‚«‚³‚ğŠm•Û‚·‚é‚±‚Æ
+		void init(int m) {
+			n = 1;
+			while (n < m) {
+				n *= 2;
 			}
-			for (int i = 0; i < 2 * n_ - 1; i++) {
-				dat_[i] = (int)(1e+9 + 7);
+			for (int i = 0; i < 2 * n - 1; i++) {
+				dat[i] = (int)(1e+9 + 7);
 			}
 		}
 		void update(int i, int value) {
-			i += n_ - 1;
-			dat_[i] = value;
+			i += n - 1;
+			dat[i] = value;
 			while (i > 0) {
 				i = (i - 1) / 2;
 				int chl = 2 * i + 1;
 				int chr = 2 * i + 2;
-				dat_[i] = min(dat_[chl], dat_[chr]);
+				dat[i] = min(dat[chl], dat[chr]);
 			}
 		}
 		//[a, b) node-k [l, r)
 		int query(int a, int b, int k, int l, int r) {
-			if (a <= l && r <= b) return dat_[k];
+			if (a <= l && r <= b) return dat[k];
 			if (b <= l || r <= a) return (int)(1e+9 + 7);
 			int chl = 2 * k + 1;
 			int chr = 2 * k + 2;
@@ -66,8 +65,8 @@ int main() {
 		seg.update(i, x[i]);
 	}
 
-	rep(i, 2 * seg.n_ - 1) {
-		printf("%2d: %d\n", i, seg.dat_[i]);
+	rep(i, 2 * seg.n - 1) {
+		printf("%2d: %d\n", i, seg.dat[i]);
 	}
 
 	rep(i, size) {
