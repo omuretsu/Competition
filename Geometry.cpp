@@ -49,6 +49,7 @@ struct P {
 		return add(x * p.y, -y * p.x);
 	}
 };
+
 // 概要　：線分s1-e1と線分s2-e2が交差しているか判定する(線分はベクトル扱い)
 // 引数１：ベクトル1の始点
 // 引数２：ベクトル1の終点
@@ -56,7 +57,7 @@ struct P {
 // 引数４：ベクトル2の終点
 // 戻り値：true  ベクトル1とベクトル2は交差している
 // 　　　　false ベクトル1とベクトル2は交差していない
-bool intersect(P s1, P e1, P s2, P e2) { // 線分交差
+bool intersectSS(P s1, P e1, P s2, P e2) { // 線分交差
 	//x座標的に離れて位置している
 	if (max(s1.x, e1.x) < min(s2.x, e2.x) || max(s2.x, e2.x) < min(s1.x, e1.x)) return false;
 	//y座標的に離れて位置している
@@ -66,6 +67,20 @@ bool intersect(P s1, P e1, P s2, P e2) { // 線分交差
 	double res2 = (e2 - s2).cross(e1 - s2) * (e2 - s2).cross(s1 - s2);
 	return (res1 < EPS) && (res2 < EPS);
 }
+
+// 概要　：s1,e1を通る直線と線分s2-e2が交差しているか判定する
+// 引数１：直線が通る点1
+// 引数２：直線が通る点2
+// 引数３：線分(ベクトル)の始点
+// 引数４：線分(ベクトル)の終点
+// 戻り値：true  直線と線分が交差している
+// 　　　　false 直線と線分が交差していない
+bool intersectLS(P s1, P e1, P s2, P e2) {
+	// s1とe1は異なる点であること
+	double res = (e1 - s1).cross(s2 - s1) * (e1 - s1).cross(e2 - s1);
+	return res < EPS; 
+}
+
 // 概要　：線分上にp1-p2上に点qが存在するか判定する
 // 引数１：線分の端点１(p1)
 // 引数２：線分の端点２(p2)
@@ -139,7 +154,7 @@ int main() {
 					}
 				}
 #else
-				if (intersect(p[i], q[i], p[j], q[j])) {
+				if (intersectSS(p[i], q[i], p[j], q[j])) {
 					uf.unite(i, j);
 				}
 			}
