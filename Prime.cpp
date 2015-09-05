@@ -41,10 +41,38 @@ void sieve_of_eratosthenes(int *a, int n) {
 	}
 }
 
+
+//
+// ŠT—v  :‘fˆö”•ª‰ğ‚ğ‚·‚é
+// ˆø”1 :‘ÎÛ‚Ì”
+// –ß‚è’l:‘fˆö”‚ÌƒŠƒXƒgAPLL‚Ìfirst: ‘f”Asecond: ‘Î‰‚·‚é‘f”‚ÌŒÂ”
+//
+vector<PLL> prime_factorization(ll x) {
+	vector<PLL> res;
+	for (ll i = 2; i * i <= x; i++) {
+		if (x % i != 0) continue;
+		PLL cur = PLL(0, 0);
+		cur.first = i;
+		while (x % i == 0) {
+			cur.second++;
+			x /= i;
+		}
+		res.push_back(cur);
+	}
+	// x‚ª‘f”‚Å‚ ‚Á‚½ê‡‚Íx‚ğ’Ç‰Á
+	if (x != 1) {
+		res.push_back(PLL(x, 1));
+	}
+	return res;
+}
+
+
+
 int n;
 int prime[100005];
 
 int main() {
+#if 1
 	cin >> n;
 	sieve_of_eratosthenes(prime, 100005);
 	for (int i = max(3, n - 100); i <= n + 100; i++) {
@@ -52,6 +80,14 @@ int main() {
 		cout << i << endl;
 		break;
 	}
+#else
+	// ‘fˆö”•ª‰ğ—á
+	vector<PLL> res = prime_factorization(1188);
+	rep(i, res.size()) {
+		cout << res[i].first << " " << res[i].second << endl;
+	}
+#endif
+
 	return 0;
 }
 
