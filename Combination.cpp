@@ -22,8 +22,36 @@ typedef long long ll;
 typedef pair<int, int> PII;
 typedef pair<long, long> PLL;
 
+//
+// 大きくなりそうな組み合わせ数を求める
+// doubleで計算するので誤差がある可能性大
+// pCq = p!/((p-q)!q!)
+// log(pCq) = log(p!) - (log((p-q)!) + log(q!))
+// pCq = exp(log(pCq))
+// でpCqを求める
+//
+struct LogCombination {
+	double log_fact[10005];
+	LogCombination(int size) {
+		for (int i = 1; i <= size; i++) {
+			log_fact[i] = log(i) + log_fact[i-1];
+		}
+		log_fact[0] = log(1);
+	}
+	double log_pCq(int p, int q) {
+		double x = log_fact[p] - (log_fact[q] + log_fact[p - q]);
+		return x;
+	}
+	double pCq(int p, int q) {
+		double x = log_pCq(p, q);
+		return exp(x);
+	}
+};
 
-// 概要  ：組み合わせを求める
+LogCombination comb(1005);
+
+
+// 概要  ：組み合わせを求める,modないとC[100][?]くらいでOverflowする？
 // 引数1 ：組み合わせ対象の要素数
 // 返り値：なし
 ll C[1005][1005];
@@ -39,18 +67,15 @@ void combination(int size) {
 
 ll N, K;
 int main() {
+#if 0
 	combination(1005);
 
 	rep(i, 10) rep(j, 10) {
 		printf("%lld%c", C[i][j], j == 9 ? '\n' : ' ');
 	}
-
-	cin >> N >> K;
-	if (K >= N) {
-		cout << C[N][K%N] << endl;
-	} else {
-		cout << C[N+K-1][K] << endl;
-	}
+#else
+	cout << comb.pCq(5, 2) << endl;
+#endif
 	return 0;
 }
 
