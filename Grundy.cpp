@@ -31,11 +31,11 @@ int N, K;
 vector<int> a;
 int x[105];
 
-// ¡‚Ìó‘Ô‚©‚çˆêè‚Å‚¢‚¯‚éó‘Ô‚ÌGrundy”‚ÉŠÜ‚Ü‚ê‚Ä‚¢‚È‚¢Å¬‚Ì”ñ•‰®”‚ªA
-// ¡‚Ìó‘Ô‚ÌGrundy”
+// ä»Šã®çŠ¶æ…‹ã‹ã‚‰ä¸€æ‰‹ã§ã„ã‘ã‚‹çŠ¶æ…‹ã®Grundyæ•°ã«å«ã¾ã‚Œã¦ã„ãªã„æœ€å°ã®éè² æ•´æ•°ãŒã€
+// ä»Šã®çŠ¶æ…‹ã®Grundyæ•°
 // grundy(x1) xor grundy(x2) xor grundy(x3) ...
-// 0 -> •‰‚¯
-// 0ˆÈŠO -> Ÿ‚¿
+// 0 -> è² ã‘
+// 0ä»¥å¤– -> å‹ã¡
 
 int grundy[105];
 int grundy_number(int x, vector<int> &a) {
@@ -56,7 +56,7 @@ int grundy_number(int x, vector<int> &a) {
 
 void solve() {
 	memset(grundy, -1, sizeof(grundy));
-	grundy[0] = 0;//•‰‚¯
+	grundy[0] = 0;//è² ã‘
 	int res = 0;
 	for (int i = 0; i < N; i++) {
 		int tmp = grundy_number(x[i], a);
