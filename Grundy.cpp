@@ -31,6 +31,12 @@ int N, K;
 vector<int> a;
 int x[105];
 
+// ¡‚Ìó‘Ô‚©‚çˆêè‚Å‚¢‚¯‚éó‘Ô‚ÌGrundy”‚ÉŠÜ‚Ü‚ê‚Ä‚¢‚È‚¢Å¬‚Ì”ñ•‰®”‚ªA
+// ¡‚Ìó‘Ô‚ÌGrundy”
+// grundy(x1) xor grundy(x2) xor grundy(x3) ...
+// 0 -> •‰‚¯
+// 0ˆÈŠO -> Ÿ‚¿
+
 int grundy[105];
 int grundy_number(int x, vector<int> &a) {
 	if (grundy[x] != -1) return grundy[x];
