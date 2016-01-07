@@ -27,6 +27,10 @@ typedef pair<ll, ll> PLL;
 typedef complex<double> Complex;
 typedef vector< vector<int> > Mat;
 
+// RollingHash
+// 文字列からハッシュ値を求める
+// 文字列の検索とかするときに有効
+// qとmは互いに素である数値を指定
 struct RollingHash {
 	string s;
 	ull p;
@@ -58,22 +62,40 @@ struct RollingHash {
 	}
 };
 
-RollingHash rh;
+// Longest Common Prefix(最長共通接頭語)
+// rh1で管理する文字列のインデックスiとrh2で管理する文字列のインデックスj
+// から最長で共通する文字列の長さは何文字かを求める
+int LCP(RollingHash &rh1, int i, RollingHash &rh2, int j) {
+	int l = 0, r = min(rh1.size() - i, rh2.size() - j) + 1;
+	while (r - l > 1) {
+		int m = (l + r) / 2;
+		if (rh1.hash(i, i + m) == rh2.hash(j, j + m)) {
+			l = m;
+		} else {
+			r = m;
+		}
+	}
+	int length = l;
+	return length;
+}
+
+RollingHash rh1, rh2;
 
 void solve() {
-	string x = "hi";
-	rh.init(x, 101);
-	rh.build();
-	for (int i = 0; i < rh.size(); i++) {
-		cout << i << ": " << rh.phash[i + 1] << endl;
-	}
-	cout << "---" << endl;
-	for (int i = 0; i < rh.size(); i++) {
-		cout << i << ": " << rh.pow[i + 1] << endl;
-	}
-	for (int i = 0; i < rh.size(); i++) {
-		cout << i << ": " << rh.hash(0, i+1) << endl;
-	}
+	string x = "application";
+	rh1.init(x);
+	rh1.build();
+
+	string y = "appliance";
+	rh2.init(y);
+	rh2.build();
+
+	printf("%s\n", x.c_str());
+	printf("%s\n", y.c_str());
+	int start = 0;
+	int lcp = LCP(rh1, start, rh2, start);
+	printf("index:%dからのLCP: %d文字\n", start, lcp);
+	printf("%s\n", x.substr(start, lcp).c_str());
 }
 
 int main() {
