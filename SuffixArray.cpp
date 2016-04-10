@@ -35,6 +35,9 @@ namespace SuffixArray {
 	int rank[MAX_N]; // rank[i]: æ“ªindex i‚ÌÚ”ö«‚Ì‡ˆÊ
 	int sa[MAX_N];   //   sa[i]: ‡ˆÊi‚ÌÚ”ö«‚Ìæ“ªindex
 	int tmp[MAX_N];  //  tmp[i]: ì‹Æ—p
+	int lcp[MAX_N];  //  lcp[i]: ‡ˆÊi‚ÌÚ”ö«‚Æ‡ˆÊi+1‚ÌÚ”ö«‚Ìlcp(Å’·‹¤’ÊÚ“ª«)
+
+	string t;
 
 	bool compare_sa(int i, int j) {
 		if (rank[i] != rank[j]) {
@@ -47,6 +50,7 @@ namespace SuffixArray {
 	}
 
 	void build_sa(string s) {
+		t  = s;
 		n = s.size();
 		for (int i = 0; i <= s.size(); i++) {
 			sa[i] = i;
@@ -63,15 +67,44 @@ namespace SuffixArray {
 			}
 		}
 	}
+
+	// build_saŒã‚ÉŒÄ‚Ño‚·‚é‚±‚Æ
+	void build_lcp() {
+		for (int i = 0; i <= n; i++) {
+			rank[sa[i]] = i;
+		}
+
+		int h = 0;
+		lcp[0] = 0;
+		for (int i = 0; i < n; i++) {
+			// rank[i]=0‚Æ‚È‚é‚Ì‚Íi=n‚¾‚¯‚Çi<n‚È‚Ì‚Å–â‘è‚È‚µ
+			int j = sa[rank[i] - 1];
+
+			if (h > 0) h--;
+			for (; j + h < n && i + h < n; h++) {
+				if (t[j + h] != t[i + h]) break;
+			}
+
+			lcp[rank[i] - 1] = h;
+		}
+
+	}
 }
 
 
 int main() {
 	string x = "abracadabra";
 	SuffixArray::build_sa(x);
+	SuffixArray::build_lcp();
 
 	for (int i = 0; i <= SuffixArray::n; i++) {
-		printf("%3d %3d %s\n", i, SuffixArray::sa[i], x.substr(SuffixArray::sa[i]).c_str());
+		printf(
+				"i:%3d sa:%3d lcp:%3d %s\n",
+				i,
+				SuffixArray::sa[i],
+				SuffixArray::lcp[i],
+				x.substr(SuffixArray::sa[i]).c_str()
+		);
 	}
 	return 0;
 }
