@@ -44,7 +44,10 @@ struct SegmentTree {
 				dat[i] = min(dat[chl], dat[chr]);
 			}
 		}
-		//[a, b) node-k [l, r)
+		// [a, b) node-k [l, r)
+		// 呼び出し時(インスタンスがsegの場合
+		// seg.query(a, b, 0, 0, seg.n)
+		// 後半の引数3つは使うときは固定
 		int query(int a, int b, int k, int l, int r) {
 			if (a <= l && r <= b) return dat[k];
 			if (b <= l || r <= a) return (int)(1e+9 + 7);
