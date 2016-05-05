@@ -26,7 +26,7 @@ struct Graph {
 
 	void add_edge(int u, int v) {
 		G[u].push_back(v);
-		G[v].push_back(v);
+		G[v].push_back(u);
 	}
 
 	bool dfs(int v) {
