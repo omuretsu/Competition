@@ -24,18 +24,22 @@ typedef pair<long, long> PLL;
 const int MAX_V = 100005;
 
 struct UnionFind {
+
 	int n;
 	int parent[MAX_V];
-	UnionFind(int size) {
-		n = size;
+
+	void init(int m) {
+		n = m;
 		for (int i = 0; i < n; i++) {
 			parent[i] = i;
 		}
 	}
+
 	int find(int i) {
 		if (i == parent[i]) return i;
 		else return parent[i] = find(parent[i]);
 	}
+
 	void unite(int x, int y) {
 		int a = find(x);
 		int b = find(y);
@@ -44,13 +48,16 @@ struct UnionFind {
 			parent[a] = b;
 		}
 	}
+
 	bool is_same(int x, int y) {
 		return find(x) == find(y);
 	}
+
 };
 
 int main() {
-	UnionFind uf(5);
+	UnionFind uf;
+	uf.init(5);
 	uf.unite(2, 4);
 	rep(i, 5) {
 		rep(j, 5) {
