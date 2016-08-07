@@ -22,14 +22,12 @@ int N, M;
 
 // 概要  ：Topological Sort
 // 返り値：成功(true) / 失敗(false, DAGでない)
-
 bool TopologicalSort() {
 	// 入力辺を持たない頂点集合を取得
 	for (int i = 0; i < N; i++) {
 		if (in_node[i] != 0) continue;
 		Q.push(i);
 	}
-
 	while (!Q.empty()) {
 		int u = Q.front();
 		Q.pop();
@@ -41,7 +39,6 @@ bool TopologicalSort() {
 			Q.push(v);
 		}
 	}
-
 	for (int i = 0; i < N; i++) {
 		if (in_node[i] == 0) continue;
 		return false;
@@ -69,10 +66,6 @@ int main() {
 	for (int i = 0; i < L.size(); i++) {
 		cout << L[i] << " ";
 	} cout << endl;
-
-
-
-
 	return 0;
 }
 
