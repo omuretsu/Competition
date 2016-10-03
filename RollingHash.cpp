@@ -37,7 +37,7 @@ struct RollingHash {
 	ull mod;
 	ull phash[int(1e+6) + 5];
 	ull pow[int(1e+6) + 5];
-	void init(string t, ull q=1e+9 + 7, ull m=(1ULL<<30)) {
+	void init(string t, ull q=1e+9 + 7, ull m=(1ULL<<60)) {
 		s = t;
 		p = q;
 		mod = m;
@@ -52,7 +52,7 @@ struct RollingHash {
 			pow[i + 1] %= mod;
 		}
 	}
-	//[0, x)‚Ì Rolling Hash ‚ðŒvŽZ
+	//[i, j)‚Ì Rolling Hash ‚ðŒvŽZ
 	ull hash(int i, int j) {
 		ull res = (phash[i] * pow[j - i]) % mod;
 		return (phash[j] + mod - res) % mod;
